@@ -33,17 +33,13 @@ async function getRandomPage (item, metadata) {
 }
 
 async function doTweet (image, item, metadata, page) {
-  try {
-    const client = new TwitterApi(config.credentials)
-    const mediaId = await client.v1.uploadMedia(Buffer.from(image), { type: 'jpg' })
+  const client = new TwitterApi(config.credentials)
+  const mediaId = await client.v1.uploadMedia(Buffer.from(image), { type: 'jpg' })
 
-    await client.v2.tweet(
-      tweetText(item, metadata, page),
-      { media: { media_ids: [mediaId] } }
-    )
-  } catch (error) {
-    console.log(error)
-  }
+  await client.v2.tweet(
+    tweetText(item, metadata, page),
+    { media: { media_ids: [mediaId] } }
+  )
 }
 
 // Return array of items in a given collection
